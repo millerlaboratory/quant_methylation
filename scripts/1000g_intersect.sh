@@ -15,7 +15,7 @@ cd $INPUT_DIR
 files=$(find "$INPUT_DIR" -type f -name "*.cpg.bed.gz")
 
 for file in $files; do
-  #gunzip "$file"
+  gunzip "$file"
 done
 
 # Loop through subdirectories
