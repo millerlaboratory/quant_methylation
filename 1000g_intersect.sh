@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#test
+
 script=/n/users/sgibson/scripts/simplified_intersect.sh
 
 module load samtools/1.12  
