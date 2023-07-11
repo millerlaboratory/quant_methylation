@@ -1,14 +1,24 @@
 #!/bin/bash
 
+INPUT_DIR=/n/1000g/align-card-2.24-hg38
 WORKING_DIR=/n/users/sgibson/1000g_methylation/1000g_modkit
-REFERENCE=/n/users/sgibson/quant_methylation/reference/GCA_000001405.15_GRCh38_no_alt_analysis_set_maskedGRC_exclusions_v2.fasta
 directory_list_file="/n/users/sgibson/1000g_methylation/directory_list.txt"
 
-module load modkit/0.1.3
+module load samtools/1.12  
 
 while IFS= read -r directory_name; do
-#run modkit on each bam file
-    for file in $WORKING_DIR/$directory_name/*.bam; do
-    modkit pileup "$file" --cpg --ref $REFERENCE --ignore h --combine-strands "$WORKING_DIR/$directory_name/${file##*/}.cpg.bed"
+    # Create the matching output directory
+    mkdir -p "$WORKING_DIR/$directory_name"
+    
+    # Copy the file from the input directory to the output directory
+    for file in $INPUT_DIR/$directory_name/*.haplotagged.bam; do
+    samtools view -b -d HP:1 --threads 10 "$file" chrX > "$WORKING_DIR/$directory_name/${file##*/}.chrX.hp1.bam"
+    samtools view -b -d HP:2 --threads 10 "$file" chrX > "$WORKING_DIR/$directory_name/${file##*/}.chrX.hp2.bam"
     done
 done < "$directory_list_file"
+
+bamfiles=$(find "$WORKING_DIR" -type f -name "*.bam")
+
+for file in $bamfiles; do
+	samtools index "$file"
+done
