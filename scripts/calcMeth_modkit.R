@@ -25,34 +25,16 @@ bed <- read_delim(bedfile)
 
 names(bed) <- mod_kit_header
 
-coord_resolved <- bed %>%
-  dplyr::mutate("new_start" = ifelse(strand == "+", start, start-1)) %>%
-  dplyr::mutate("new_stop" = ifelse(strand == "+", stop, stop-1)) %>%
-  dplyr::group_by(chr, new_start, new_stop, mod, score, strand, Nvalid_cov, per_mod, Ncanon, Nmod, Nother_mod, Ndelete, Nfail, Ndiff, Nnocall, cpg, Haplotype, sample) %>%
-  reframe()
 
-sites_resolved <- coord_resolved %>%
-  dplyr::group_by(chr, new_start, new_stop, cpg, sample, Haplotype) %>%
-  dplyr::summarise(coverage = sum(Nvalid_cov), Ncanon = sum(Ncanon), Nmod = sum(Nmod)) %>%
-  dplyr::mutate("per_mod" = (Nmod/(Nmod+Ncanon))*100)
-
-
-
-perIsland <- sites_resolved %>%
+perIsland <- bed %>%
   dplyr::group_by(chr,cpg,Haplotype,sample) %>%
-  dplyr::reframe(start = first(new_start),stop =last(new_stop),mean_per_mod=mean(per_mod, na.rm =TRUE),stderr=plotrix::std.error(per_mod))
-
-perIsland <- sites_resolved %>%
-  dplyr::group_by(chr,cpg,Haplotype,sample) %>%
-  dplyr::summarise(start = first(new_start),stop =last(new_stop),mean_per_mod=mean(per_mod, na.rm =TRUE),stderr=plotrix::std.error(per_mod), mean_coverage = mean(coverage))
-
+  dplyr::reframe(start = first(start),stop =last(stop),mean_per_mod=mean(per_mod, na.rm =TRUE),stderr=plotrix::std.error(per_mod),mean_coverage = mean(Nvalid_cov))
 
 perIsland <- dplyr::left_join(perIsland, cpgIslands.gene)
 
 outfile <- paste0(arg2, "perIsland.tsv")
 
 write_tsv(perIsland, outfile)
-
 
 
 
