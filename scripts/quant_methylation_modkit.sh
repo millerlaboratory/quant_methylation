@@ -15,5 +15,5 @@ files=$(find $INPUT_DIR -type f -name "*_PMDV_FINAL.haplotagged.bam")
 
 #run modkit on each bam file
 for file in $files; do
-    modkit pileup "$file" --cpg --ref $REFERENCE --ignore h --combine-strands --partition-tag HP "$WORKING_DIR/${file##*/}" --log-filepath "$WORKING_DIR/${file##*/}/pileup.log" --prefix "${file##*/}.cpg"
+    modkit pileup "$file" --cpg --ref $REFERENCE -t 40 --ignore h --combine-strands --partition-tag HP "$WORKING_DIR/${file##*/}" --log-filepath "$WORKING_DIR/${file##*/}/pileup.log" --prefix "${file##*/}.cpg"
 done
