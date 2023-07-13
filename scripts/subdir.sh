@@ -8,7 +8,7 @@ module load samtools/1.12
 module load bedtools/2.30.0
 module load R/4.2.3
 
-INPUT_DIR=/n/users/sgibson/1000g_methylation/1000g_modkit
+INPUT_DIR=/n/users/sgibson/1000g_methylation/1000g_modkit/v0.1.11
 
 cd $INPUT_DIR
 
