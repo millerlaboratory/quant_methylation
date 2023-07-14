@@ -3,9 +3,14 @@ library(dplyr)
 library(purrr)
 
 
+args = commandArgs(TRUE)
 
-wd <- "~/mcclintock/users/sgibson/output"
+arg1 <- args[1]
 
+setwd(arg1)
+
+wd <- arg1
+                                                                                    
 # Get the list of file names in the directory
 file_names <- list.files(wd, pattern = "\\.tsv$", full.names = TRUE)
 
@@ -18,7 +23,7 @@ for (file_name in file_names) {
 
 combined_data <- do.call(rbind,all_data)
 
-write_tsv(combined_data, "~/mcclintock/users/sgibson/output/1000g_XX_all_samples.tsv")
+write_tsv(combined_data, "1000g_XX_all_samples.tsv")
 
 diff <- combined_data %>%
   dplyr::group_by(chr,start,stop,cpg,gene,sample) %>%
@@ -45,14 +50,14 @@ density_data_list <- data %>%
 combined_density_data <- data.frame(bind_rows(density_data_list))
 
 
-write_tsv(combined_density_data, "~/mcclintock/users/sgibson/output/combined_density_data.tsv")
+write_tsv(combined_density_data, "combined_density_data.tsv")
 
 
 samples <- data %>%
   group_by(sample) %>%
   summarise()
 
-write_tsv(samples, "~/mcclintock/users/sgibson/output/samples_1000g.tsv")
+write_tsv(samples, "samples_1000g.tsv")
 
 
 
