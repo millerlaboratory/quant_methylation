@@ -2,7 +2,7 @@
 
 list=/n/users/sgibson/reference/1000g_XX.txt
 INPUT_DIR=/n/users/sgibson/1000g_methylation/1000g_modkit/v0.1.11
-OUTPUT_DIR=/n/users/sgibson/output
+OUTPUT_DIR=/n/users/sgibson/v0.1.11/XX_chrX
 
 readarray -t directory_list < "$list"
 
