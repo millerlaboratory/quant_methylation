@@ -27,7 +27,7 @@ names(bed) <- mod_kit_header
 
 
 perIsland <- bed %>%
-  dplyr::mutate(Haplotype=ifelse(Haplotype = 1, "hp1", "hp2")) %>%
+  dplyr::mutate(Haplotype=ifelse(Haplotype == 1, "hp1", "hp2")) %>%
   dplyr::group_by(chr,cpg,Haplotype,sample) %>%
   dplyr::reframe(start = first(start),stop =last(stop),mean_per_mod=mean(per_mod, na.rm =TRUE),stderr=plotrix::std.error(per_mod),mean_coverage = mean(Nvalid_cov))
 

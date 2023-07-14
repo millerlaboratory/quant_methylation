@@ -36,3 +36,4 @@ awk '{print > $1".bed"}' merged_haplotypes.bed
 
 
 Rscript $RScript $WORKING_DIR chrX $GENE_FILE
+

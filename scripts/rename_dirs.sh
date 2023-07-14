@@ -1,16 +1,16 @@
 #!/bin/bash
 
-WORKING_DIR=/n/users/sgibson/1000g_methylation/1000g_modkit/v0.1.11/
+INPUT_DIR=/n/users/sgibson/1000g_methylation/1000g_modkit/v0.1.11_processed
 
-cd $WORKING_DIR
+cd $INPUT_DIR
 
-for subdir in "$WORKING_DIR"/*; do
+for subdir in "$INPUT_DIR"/*; do
   if [ -d "$subdir" ]; then
     # Run the shell script for each subdirectory
     subdirectory_name=$(basename "$subdir")
     new_name=$(echo "${subdirectory_name:0:17}")
     
-    mv "$WORKING_DIR/$subdir" "$WORKING_DIR/$new_name"
+    mv "$subdir" "$INPUT_DIR/$new_name"
 
   fi
 done
