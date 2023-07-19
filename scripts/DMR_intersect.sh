@@ -26,4 +26,4 @@ sample=$(basename $WORKING_DIR)
 cat *_labeled.bed > "${sample}_merged_haplotypes.bed"
 
 rm *_labeled.bed
-rm *_DMR.bed
+rm *_DMR_.bed
