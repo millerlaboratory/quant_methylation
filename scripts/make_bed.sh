@@ -7,3 +7,5 @@ cd $WORKING_DIR
 for file in $WORKING_DIR/*.tsv; do
 cat $file | awk '{print $1 "\t" $2 "\t" $3}' | tail -n +2 > $WORKING_DIR/${file##*/}.bed
 done
+
+cat *.bed > combined_bed.bed
