@@ -9,6 +9,7 @@ source activate r_env
 
 Rscript=/n/users/sgibson/quant_methylation/scripts/run_DSS.R
 INPUT_DIR=/n/users/sgibson/1000g_methylation/1000g_modkit/modkit_v0.1.11/DSS
+OUTPUT_DIR=/n/users/sgibson/1000g_methylation/1000g_modkit/modkit_v0.1.11/DSS_DMRs
 
 cd $INPUT_DIR
 
@@ -17,7 +18,7 @@ for subdir in "$INPUT_DIR"/*; do
   if [ -d "$subdir" ]; then
     # Run the shell script for each subdirectory
     cd "$subdir"
-    Rscript "$Rscript" $subdir 
+    Rscript "$Rscript" $subdir $OUTPUT_DIR
     
     echo "Script executed for directory: $subdir"
   fi

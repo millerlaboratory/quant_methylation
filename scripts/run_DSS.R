@@ -9,6 +9,7 @@ suppressPackageStartupMessages(library("readr"))
 args = commandArgs(TRUE)
 
 arg1 <- args[1]
+arg2 <- args[2]
 
 setwd(arg1)
 
@@ -42,9 +43,11 @@ dmlTest <- DMLtest(BSobj, group1 = c("H1"), group2 = c("H2"), equal.disp = TRUE,
 dmrs <- callDMR(dmlTest, delta=0.5, p.threshold = 0.01, dis.merge=100) %>%
   dplyr::mutate(sample = name)
 
-out_dml <- paste0(name,"_DMLtest.tsv")
+#out_dml <- paste0(name,"_DMLtest.tsv")
 
-write_tsv(dmlTest, out_dml)
+#write_tsv(dmlTest, out_dml)
+
+setwd(arg2)
 
 out_dmr <- paste0(name, "_DMR.tsv")
 
