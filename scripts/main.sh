@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#Run modkit on a sample and out put the DMR files for the X chromsomes
+
 
 sh /n/users/sgibson/quant_methylation/scripts/quant_methylation_modkit.sh /n/alignments-card/M0744-NP-WGS-skewX-DMD-female-sib-SJ/ /n/users/sgibson/modkit_pipeline_output/ &
 

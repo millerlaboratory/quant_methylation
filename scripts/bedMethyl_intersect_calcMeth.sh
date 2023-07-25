@@ -47,7 +47,7 @@ awk '{print > $1".bed"}' merged_haplotypes.bed
 Rscript $RScript $WORKING_DIR $CHR $GENE_FILE
 
 
-#Re-zip cpg files
-for bed_file in *.cpg.bed ; do
-    bgzip "$bed_file"
-done
+
+#for bed_file in *.cpg.bed ; do
+    #bgzip "$bed_file"
+#done
