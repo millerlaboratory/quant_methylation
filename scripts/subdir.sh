@@ -8,16 +8,16 @@ module load samtools/1.12
 module load bedtools/2.30.0
 module load R/4.2.3
 
-INPUT_DIR=/n/users/sgibson/1000g_methylation/1000g_modkit/modkit_v0.1.11/test_set/
+INPUT_DIR=/n/users/sgibson/1000g_methylation/1000g_modkit/modkit_v0.1.11/v0.1.11_processed
 
 cd $INPUT_DIR
 
 #Unzip cpg files
-#zipped_bed_files=$(find $INPUT_DIR -type f -name "*cpg_[1-2].bed.gz")
+zipped_bed_files=$(find $INPUT_DIR -type f -name "*cpg_[1-2].bed.gz")
 
-#for file in $zipped_bed_files; do
-  #gunzip "$file"
-#done
+for file in $zipped_bed_files; do
+  gunzip "$file"
+done
 
 
 # Loop through subdirectories
