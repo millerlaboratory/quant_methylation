@@ -21,7 +21,7 @@ done
 #Add the sample name and haplotype as columns in each file
 for bed_file in $WORKING_DIR/*_Islands.bed; do
     sample=$(echo "${bed_file##*/}" | cut -d'.' -f1)
-    hap=$(echo "${bed_file##*/}" | cut -d'_' -f4) #new naming scheme
+    hap=$(echo "${bed_file##*/}" | cut -d'_' -f2) #new naming scheme
     awk -v OFS="\t" -v sample="$sample" -v hap="$hap" '{print $0 "\t" sample "\t" hap}' "$bed_file" > "${bed_file%.bed}_labeled.bed"
 done
 
