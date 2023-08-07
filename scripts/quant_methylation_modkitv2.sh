@@ -10,7 +10,11 @@ module load modkit/0.1.11
 
 cd $WORKING_DIR
 
-directory_list=("M0817-NP-WGS-Billington-LR02-430-JaBoy-m")
+mkdir modkit_processed
+
+cd modkit_processed
+
+directory_list=("M1312-NP-WGS-UDN-UDN550179")
 
 # Loop through each directory in the current directory
 for dir in $INPUT_DIR/*; do
@@ -20,7 +24,7 @@ for dir in $INPUT_DIR/*; do
     # Check if the basename is in the list of directory names
     if [[ " ${directory_list[@]} " =~ " $dirname " ]]; then
         # Perform the desired function on the directory
-        file=$(find $dir -type f -name "*_PMDV_FINAL.haplotagged.bam")
+        file=$(find $dir -type f -name "*phased.bam")
         modkit pileup "$file" --cpg --ref $REFERENCE -t 40 --ignore h --combine-strands --partition-tag HP "$WORKING_DIR/${dirname}" --log-filepath "$WORKING_DIR/${dirname}/pileup.log" --prefix "${dirname}.cpg"
         
     fi
