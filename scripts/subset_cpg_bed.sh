@@ -4,8 +4,8 @@
 
 list=/n/users/sgibson/reference/1000g_XX.txt
 INPUT_DIR=/n/users/sgibson/1000g_methylation/1000g_modkit/modkit_v0.1.11/v0.1.11_processed/
-OUTPUT_DIR=//n/users/sgibson/1000g_methylation/1000g_modkit/modkit_v0.1.11/v0.1.11_processed/XX_chrX
-Rscript=/n/users/sgibson/quant_methylation/scripts/shiny_tables.R
+OUTPUT_DIR=/n/users/sgibson/1000g_methylation/1000g_modkit/modkit_v0.1.11/v0.1.11_processed/XX_X_cpg
+
 
 module load R/4.2.3
 
@@ -21,12 +21,8 @@ for subdirectory_path in "$INPUT_DIR"/*; do
 
             # Check if the first 7 characters match any in the list
             if [[ " ${directory_list[@]} " =~ " $first_seven_chars " ]]; then
-            scp "$subdirectory_path/chrXperIsland.tsv" "$OUTPUT_DIR/${subdirectory_name}_chrXperIsland.tsv"
+            cat "$subdirectory_path/merged_chrX.bed" | awk '{print $1 "\t" $2 "\t" $3 "\t" $10 "\t" $11 "\t" "\t" $19 "\t" $20}' > "$OUTPUT_DIR/${subdirectory_name}_merged_chrX.bed"
         fi
     fi
 done
 
-
-#Run R script
-
-Rscript $Rscript $OUTPUT_DIR
