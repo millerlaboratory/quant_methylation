@@ -27,10 +27,10 @@ for dir in $INPUT_DIR/*; do
     fi
 done
 
-bed_files=$(find $INPUT_DIR -type f -name "*cpg_[1-2].bed")
+#bed_files=$(find -type f -name "*cpg_[1-2].bed")
 
-for bed_file in $bed_files; do
-  bgzip "$bed_file"
-done
+#for bed_file in $bed_files; do
+  #bgzip "$bed_file"
+#done
 
 echo "modkit complete"
