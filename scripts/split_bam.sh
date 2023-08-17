@@ -1,5 +1,8 @@
 #!/bin/bash
 
+
+#modkit has a tag for haplotypes, so this is no longer needed.
+
 INPUT_DIR=/n/1000g/align-card-2.24-hg38
 WORKING_DIR=/n/users/sgibson/1000g_methylation/1000g_modkit
 directory_list_file="/n/users/sgibson/1000g_methylation/directory_list.txt"

@@ -12,10 +12,14 @@ args = commandArgs(TRUE)
 arg1 <- args[1]
 arg2 <- args[2]
 arg3 <- args[3]
+arg4 <- args[4]
+arg5 <- args[5]
 
 setwd(arg1)
 
-mod_kit_header <- c("chr", "start", "stop", "mod", "score", "strand", "Nvalid_cov", "per_mod", "Nmod", "Ncanon", "Nother_mod", "Ndelete", "Nfail", "Ndiff", "Nnocall", "cpg", "sample","Haplotype")
+mod_kit_header <- c("chr", "start", "stop", "mod", "score", "strand", "Nvalid_cov", 
+                    "per_mod", "Nmod", "Ncanon", "Nother_mod", "Ndelete", "Nfail", 
+                    "Ndiff", "Nnocall", "cpg", "sample","Haplotype")
 
 cpgIslands.gene <- read.delim(arg3)
 
@@ -33,11 +37,8 @@ perIsland <- bed %>%
 
 perIsland <- dplyr::left_join(perIsland, cpgIslands.gene)
 
-outfile <- paste0(arg2, "perIsland.tsv")
+setwd(arg5)
+
+outfile <- paste0(arg4, arg2, "perIsland.tsv")
 
 write_tsv(perIsland, outfile)
-
-
-
-
-
