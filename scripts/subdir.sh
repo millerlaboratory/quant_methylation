@@ -2,7 +2,7 @@
 
 #Script for running the bedtools interect and quantification script on each 1000g sample
 
-script=/n/users/sgibson/quant_methylation/scripts/modkit_intersect.sh
+script=/n/users/sgibson/github_repo/quant_methylation/scripts/modkit_intersect.sh
 
 module load samtools/1.12  
 module load bedtools/2.30.0
