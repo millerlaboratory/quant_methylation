@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#Script for running the bedtools interect and quantification script on each 1000g sample
+#Script for running the bedtools interect and quantification script, change the input directory to run.
 
 script=/n/users/sgibson/github_repo/quant_methylation/scripts/modkit_intersect.sh
 

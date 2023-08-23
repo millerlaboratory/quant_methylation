@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#Selects from a smaller list of samples for processing
+#Uses modkit on patient samples either through the CARD pipeline or Miller Lab pipeline
 
 INPUT_DIR=$1
 WORKING_DIR=$2

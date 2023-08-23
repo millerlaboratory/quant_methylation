@@ -2,10 +2,10 @@
 
 WORKING_DIR=$1
 
-RScript=/n/users/sgibson/quant_methylation/scripts/calcMeth_modkit.R
+RScript=/n/users/sgibson/github_repo/quant_methylation/scripts/calcMeth_modkit.R
 Reference_bed=/n/users/sgibson/reference/cpgIslands.hg38_NUM_FOR_INTERSECT.bed
-
 GENE_FILE=/n/users/sgibson/reference/cpgIslands.gene.tsv
+
 cd $WORKING_DIR
 
 module load bedtools/2.30.0
@@ -20,8 +20,8 @@ done
 
 #Add the sample name and haplotype as columns in each file
 for bed_file in $WORKING_DIR/*_Islands.bed; do
-    sample=$(echo "${bed_file##*/}" | cut -d'-' -f1)
-    hap=$(echo "${bed_file##*/}" | cut -d'_' -f2) #new naming scheme
+    sample=$(echo "${bed_file##*/}" | cut -d'.' -f1) #Sample labeling compliant with 1000g samples
+    hap=$(echo "${bed_file##*/}" | cut -d'_' -f2) #Haplotype scheme compliant with 1000g naming structure, not Miller lab samples
     awk -v OFS="\t" -v sample="$sample" -v hap="$hap" '{print $0 "\t" sample "\t" hap}' "$bed_file" > "${bed_file%.bed}_labeled.bed"
 done
 
@@ -37,3 +37,10 @@ awk '{print > $1".bed"}' merged_haplotypes.bed
 
 Rscript $RScript $WORKING_DIR chrX $GENE_FILE
 
+bed_files=$(find $INPUT_DIR -type f -name "*cpg_[1-2].bed")
+
+for file in $bed_files; do
+  bgzip "$file"
+done
+
+bgzip *_ungrouped.bed
