@@ -2,13 +2,13 @@
 
 #Script for running the bedtools interect and quantification script, change the input directory to run.
 
-script=/n/users/sgibson/github_repo/quant_methylation/scripts/modkit_intersect.sh
+script=/n/users/sgibson/github_repo/quant_methylation/scripts/extract_BWS.sh
 
 module load samtools/1.12  
 module load bedtools/2.30.0
 module load R/4.2.3
 
-INPUT_DIR=/n/users/sgibson/Analysis/Flye_rerun_methylation/modkit_processed/f_430/tmp
+INPUT_DIR=/n/users/sgibson/1000g_methylation/1000g_modkit/modkit_v0.1.11/v0.1.11_processed
 
 cd $INPUT_DIR
 
@@ -18,7 +18,6 @@ cd $INPUT_DIR
 #for file in $zipped_bed_files; do
   #gunzip "$file"
 #done
-
 
 # Loop through subdirectories
 for subdir in "$INPUT_DIR"/*; do
@@ -32,8 +31,8 @@ for subdir in "$INPUT_DIR"/*; do
 done
 
 #Once all of the files have been generated, compress the cpg bed files
-bed_files=$(find $INPUT_DIR -type f -name "*cpg_[1-2].bed")
+#bed_files=$(find $INPUT_DIR -type f -name "*cpg_[1-2].bed")
 
-for file in $bed_files; do
-  bgzip "$file"
-done
+#for file in $bed_files; do
+  #bgzip "$file"
+#done
