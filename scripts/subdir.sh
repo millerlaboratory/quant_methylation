@@ -3,6 +3,7 @@
 #Script for running the bedtools interect and quantification script, change the input directory to run.
 
 script=/n/users/sgibson/github_repo/quant_methylation/scripts/extract_BWS.sh
+sample_processed=/n/users/sgibson/1000g_methylation/1000g_modkit/modkit_v0.1.11/samples_already_processed.txt
 
 module load samtools/1.12  
 module load bedtools/2.30.0
@@ -10,29 +11,23 @@ module load R/4.2.3
 
 INPUT_DIR=/n/users/sgibson/1000g_methylation/1000g_modkit/modkit_v0.1.11/v0.1.11_processed
 
+readarray -t sample_done < "$sample_processed"
+
 cd $INPUT_DIR
 
-#Unzip cpg files
-#zipped_bed_files=$(find $INPUT_DIR -type f -name "*cpg_[1-2].bed.gz")
 
-#for file in $zipped_bed_files; do
-  #gunzip "$file"
-#done
-
-# Loop through subdirectories
+# Match the basename for each modkit processed directory with the list of ones that had already been processed
 for subdir in "$INPUT_DIR"/*; do
-  if [ -d "$subdir" ]; then
-    # Run the shell script for each subdirectory
-    cd "$subdir"
-    sh "$script" $subdir
-    
-    echo "Script executed for directory: $subdir"
-  fi
+    if [ -d "$subdir" ]; then
+        dirname=$(basename "$subdir")
+
+          # Only run intersect script on directories not previously processed
+            if [[ ! " ${sample_done[@]} " =~ " $dirname " ]]; then
+            cd "$subdir"
+            sh "$script" $subdir
+            echo "Script executed for directory: $subdir"
+            
+        fi
+    fi
 done
 
-#Once all of the files have been generated, compress the cpg bed files
-#bed_files=$(find $INPUT_DIR -type f -name "*cpg_[1-2].bed")
-
-#for file in $bed_files; do
-  #bgzip "$file"
-#done
