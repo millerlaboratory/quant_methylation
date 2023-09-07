@@ -1,29 +1,14 @@
 #!/bin/bash
 
 WORKING_DIR=$1
-OUTPUT_DIR=/n/users/sgibson/1000g_methylation/1000g_modkit/modkit_v0.1.11/chr15_PWS/poster
+OUTPUT_DIR=/n/users/sgibson/1000g_methylation/1000g_modkit/modkit_v0.1.11/chr11_BWS/for_shiny/
 
-Reference_bed=/n/users/sgibson/reference/PWA_DMR.bed
+Reference_bed=/n/users/sgibson/reference/BWS_DMR.bed
 
 cd $WORKING_DIR
 
 module load bedtools/2.30.0
 module load R/4.2.3
-
-#Re-name all cpg bed files to be the same scheme to make output file easier. Maintain the same scheme in updated scripts
-#for bed_file in $WORKING_DIR/*cpg_1.bed.gz; do
-    #file=$(basename $bed_file)
-    #char=${file:0:17}
-
-    #mv $bed_file $WORKING_DIR/${char}.cpg_1.bed.gz
-#done
-
-#for bed_file in $WORKING_DIR/*cpg_2.bed.gz; do
-    #file=$(basename $bed_file)
-    #char=${file:0:17}
-
-    #mv $bed_file $WORKING_DIR/${char}.cpg_2.bed.gz
-#done
 
 # Loop through each BED file in the directory
 for bed_file in $WORKING_DIR/*cpg_[1-2].bed.gz; do
