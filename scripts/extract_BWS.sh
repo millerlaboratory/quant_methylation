@@ -1,9 +1,9 @@
 #!/bin/bash
 
 WORKING_DIR=$1
-OUTPUT_DIR=/n/users/sgibson/1000g_methylation/1000g_modkit/modkit_v0.1.11/chr11_BWS/for_shiny/
+OUTPUT_DIR=/n/users/sgibson/1000g_methylation/1000g_modkit/modkit_v0.1.11/chr15_PWS/poster
 
-Reference_bed=/n/users/sgibson/reference/BWS_DMR.bed
+Reference_bed=/n/users/sgibson/reference/PWA_DMR.bed
 
 cd $WORKING_DIR
 
