@@ -1,15 +1,10 @@
 #!/bin/bash
 
-#Script for running the bedtools interect and quantification script, change the input directory to run.
+#Adapted from the 1000G script submit. These are simply to iterate through subddirectories. Adapting to a more parallele pipeline structure will be necessary in the future.
 
-script=/n/users/sgibson/github_repo/quant_methylation/scripts/extract_BWS.sh
-sample_processed=/n/users/sgibson/1000g_methylation/1000g_modkit/modkit_v0.1.11/samples_already_processed.txt
-
-module load samtools/1.12  
-module load bedtools/2.30.0
-module load R/4.2.3
-
-INPUT_DIR=/n/users/sgibson/1000g_methylation/1000g_modkit/modkit_v0.1.11/v0.1.11_processed
+script=$1
+sample_processed=$2
+INPUT_DIR=$3
 
 readarray -t sample_done < "$sample_processed"
 

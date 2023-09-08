@@ -1,6 +1,8 @@
 #!/bin/bash
 
-INPUT_DIR=/n/users/sgibson/1000g_methylation/1000g_modkit/v0.1.11_processed
+#Rename directories in name scheme shift
+
+INPUT_DIR=$1
 
 cd $INPUT_DIR
 

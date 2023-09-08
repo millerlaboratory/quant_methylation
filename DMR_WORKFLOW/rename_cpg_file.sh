@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#Script for re-naming files if the naming scheme shifts
+
 WORKING_DIR=$1
 
 cd $WORKING_DIR
