@@ -3,7 +3,7 @@
 
 WORKING_DIR=$1
 RScript=$2
-Reference_bed=$3 BED file for all CpG islands in hg38
+Reference_bed=$3 #BED file for all CpG islands in hg38
 
 cd $WORKING_DIR
 
