@@ -1,2 +1,4 @@
-# quant_methylation
-Collection of scripts to analyze methylation data from ONT long reads.
+# Quantifing methylation data from ONT Long Reads
+This repository includes a collection of scripts that are being developed into a pipeline for processing methylation data from aligned ONT long reads. The current output is used for visualzing methylation data for the ONT Data Explorer R shiny app: https://millerlaboratory.shinyapps.io/Data_Explorer_V1/. The goal is to use the eventual pipeline for determining X-inactivation status on whole genomes sequenced with ONT. These scripts are written and maintianed by Sophia Gibson in the Miller Laboratory at The University of Washington.
+
+This pipleline uses modkit developed by Oxford Nanopore Technologies (https://github.com/nanoporetech/modkit) to generate haplotype-specific bedMethyl pileups for all CpG sites in the genome. From there, the bedMethyl files can be intersected with region-specifc BED files to visualize methylation patterns in R. The default usages is to filter for CpGs found within known CpG islands (source UCSC Genome Browser) to look at regions of skewed methylation on the X chromosome.
