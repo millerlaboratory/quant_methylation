@@ -1,10 +1,9 @@
 #!/bin/bash
+#Use bedtools to filter for CpGs found in CpG islands, add sample and haplotype labels to each file and calculate the mean fraction of reads at each CpG island on the X chromosome
 
 WORKING_DIR=$1
-
-RScript=/n/users/sgibson/github_repo/quant_methylation/scripts/calcMeth_modkit.R
-Reference_bed=/n/users/sgibson/reference/cpgIslands.hg38_NUM_FOR_INTERSECT.bed
-GENE_FILE=/n/users/sgibson/reference/cpgIslands.gene.tsv
+RScript=$2
+Reference_bed=$3 BED file for all CpG islands in hg38
 
 cd $WORKING_DIR
 
@@ -21,7 +20,7 @@ done
 #Add the sample name and haplotype as columns in each file
 for bed_file in $WORKING_DIR/*_Islands.bed; do
     sample=$(echo "${bed_file##*/}" | cut -d'.' -f1) #Sample labeling compliant with 1000g samples
-    hap=$(echo "${bed_file##*/}" | cut -d'_' -f2) #Haplotype scheme compliant with 1000g naming structure, not Miller lab samples
+    hap=$(echo "${bed_file##*/}" | cut -d'_' -f2) #Haplotype scheme compliant with 1000g naming structure
     awk -v OFS="\t" -v sample="$sample" -v hap="$hap" '{print $0 "\t" sample "\t" hap}' "$bed_file" > "${bed_file%.bed}_labeled.bed"
 done
 
@@ -31,12 +30,13 @@ cat *_labeled.bed > merged_haplotypes.bed
 rm *_labeled.bed
 rm *_Islands.bed
 
-#Separate by chromosome
+#Split the combined, processed file by chromosome
 awk '{print > $1".bed"}' merged_haplotypes.bed
 
+#Runs the R script to calculate the mean fraction of methylated reads for each CpG island on the X chromosome
+Rscript $RScript $WORKING_DIR chrX 
 
-Rscript $RScript $WORKING_DIR chrX $GENE_FILE
-
+#Compress whole-genome bed files
 bed_files=$(find $INPUT_DIR -type f -name "*cpg_[1-2].bed")
 
 for file in $bed_files; do
@@ -44,3 +44,5 @@ for file in $bed_files; do
 done
 
 bgzip *_ungrouped.bed
+
+echo "$WORKING_DIR processed"

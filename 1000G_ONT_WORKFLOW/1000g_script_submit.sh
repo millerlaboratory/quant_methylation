@@ -2,13 +2,11 @@
 
 #Script for running the bedtools interect and quantification script on each 1000g sample
 
-script=/n/users/sgibson/github_repo/quant_methylation/scripts/1000g_modkit_intersect.sh
-sample_processed=/n/users/sgibson/1000g_methylation/1000g_modkit/modkit_v0.1.11/samples_already_processed.txt
-INPUT_DIR=/n/users/sgibson/1000g_methylation/1000g_modkit/modkit_v0.1.11/v0.1.11_processed/
-
-module load samtools/1.12  
-module load bedtools/2.30.0
-module load R/4.2.3
+script=/n/users/sgibson/github_repo/quant_methylation/1000G_ONT_WORKFLOW/1000g_modkit_intersect.sh
+RScript=/n/users/sgibson/github_repo/quant_methylation/1000G_ONT_WORKFLOW/calcMeth_modkit.R
+sample_processed=$1
+WORKING_DIR=$2
+Reference_bed=$3 #BED file for all CpG islands in hg38
 
 cd $INPUT_DIR
 
@@ -22,7 +20,7 @@ for subdir in "$INPUT_DIR"/*; do
           # Only run intersect script on directories not previously processed
             if [[ ! " ${sample_done[@]} " =~ " $dirname " ]]; then
             cd "$subdir"
-            sh "$script" $subdir
+            sh "$script" $subdir $Rscript $Reference_bed
             echo "Script executed for directory: $subdir"
             
         fi

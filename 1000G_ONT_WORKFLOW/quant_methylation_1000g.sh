@@ -2,10 +2,10 @@
 
 #Processes 1000g outputs for quant_methylation. Will only run on card directories that have not been previously processed
 
-INPUT_DIR=/n/1000g/align-card-2.24-hg38/
-TEXT_DIR=/n/users/sgibson/1000g_methylation/1000g_modkit/modkit_v0.1.11/
-OUTPUT_DIR=/n/users/sgibson/1000g_methylation/1000g_modkit/modkit_v0.1.11/v0.1.11_processed/
-REFERENCE=/n/users/sgibson/reference/GCA_000001405.15_GRCh38_no_alt_analysis_set_maskedGRC_exclusions_v2.fasta
+INPUT_DIR=$1
+TEXT_DIR=$2
+OUTPUT_DIR=$3
+REFERENCE=$4
 
 module load modkit/0.1.11
 module load  samtools/1.17
@@ -38,7 +38,7 @@ for dir in $INPUT_DIR/*; do
 
     # Check if the basename is NOT in the list of output directory names
     if [[ ! " ${subdirs[@]} " =~ " $dirname " ]]; then
-        # Perform the desired function on the directory
+        # Run modkit to generate bedMethyl pileup files
         file=$(find $INPUT_DIR/$dirname -type f -name "*.haplotagged.bam")
         modkit pileup "$file" --cpg --ref $REFERENCE -t 40 --ignore h --combine-strands --partition-tag HP "$OUTPUT_DIR/${dirname}" --log-filepath "$OUTPUT_DIR/${dirname}/pileup.log" --prefix "${dirname}.cpg"
         echo "sample complete"
