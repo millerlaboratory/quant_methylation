@@ -3,7 +3,7 @@
 #Processes 1000g outputs for quant_methylation. Will only run on card directories that have not been previously processed
 
 INPUT_DIR=$1
-TEXT_DIR=$2
+TEXT_DIR=$2 #directory for list of processed samples
 OUTPUT_DIR=$3
 REFERENCE=$4
 
@@ -38,7 +38,7 @@ for dir in $INPUT_DIR/*; do
 
     # Check if the basename is NOT in the list of output directory names
     if [[ ! " ${subdirs[@]} " =~ " $dirname " ]]; then
-        # Run modkit to generate bedMethyl pileup files
+        # Run modkit to generate bedMethyl pileup files. Currently only analyzing 5mC
         file=$(find $INPUT_DIR/$dirname -type f -name "*.haplotagged.bam")
         modkit pileup "$file" --cpg --ref $REFERENCE -t 40 --ignore h --combine-strands --partition-tag HP "$OUTPUT_DIR/${dirname}" --log-filepath "$OUTPUT_DIR/${dirname}/pileup.log" --prefix "${dirname}.cpg"
         echo "sample complete"
