@@ -4,9 +4,9 @@
 
 list=/n/users/sgibson/reference/1000g_XX.txt
 INPUT_DIR=/n/users/sgibson/1000g_methylation/modkit_v0.1.11/v0.1.11_processed
-OUTPUT_DIR=/n/users/sgibson/1000g_methylation/modkit_v0.1.11/modkit_DMR_chrX
+OUTPUT_DIR=/n/users/sgibson/1000g_methylation/modkit_v0.1.11/DMR_FILTERED
 REF=/n/users/sgibson/reference/GCA_000001405.15_GRCh38_no_alt_analysis_set_maskedGRC_exclusions_v2.fasta
-BED=/n/users/sgibson/1000g_methylation/modkit_v0.1.11/modkit_DMR_chrX/xci_test_locus.bed
+BED=/n/users/sgibson/reference/chrX_cpgIslands.hg38_NUM_FOR_INTERSECT.bed
 
 module load samtools/1.17
 module load modkit/0.2.0
@@ -24,18 +24,22 @@ for subdirectory_path in "$INPUT_DIR"/*; do
             # Check if the first 7 characters match any in the list
             if [[ " ${directory_list[@]} " =~ " $first_seven_chars " ]]; then
             HP1=$(find $subdirectory_path -type f -name "*cpg_1.bed.gz")
+            zcat $HP1 | grep "chrX" | awk -F'\t' '$5 >= 5' | bgzip > ${HP1%.bed.gz}_chrX_filtered.bed.gz
             HP2=$(find $subdirectory_path -type f -name "*cpg_2.bed.gz")
-            #tabix $HP1
-            #tabix $HP2
-            HP1_i=$(find $subdirectory_path -type f -name "*cpg_1.bed.gz.tbi")
-            HP2_i=$(find $subdirectory_path -type f -name "*cpg_2.bed.gz.tbi")
+            zcat $HP2 | grep "chrX" | awk -F'\t' '$5 >= 5' | bgzip > ${HP2%.bed.gz}_chrX_filtered.bed.gz
+            HP1F=$(find $subdirectory_path -type f -name "*cpg_1_chrX_filtered.bed.gz")
+            HP2F=$(find $subdirectory_path -type f -name "*cpg_2_chrX_filtered.bed.gz")
+            tabix $HP1F
+            tabix $HP2F
+            HP1_i=$(find $subdirectory_path -type f -name "*cpg_1_chrX_filtered.bed.gz.tbi")
+            HP2_i=$(find $subdirectory_path -type f -name "*cpg_2_chrX_filtered.bed.gz.tbi")
 
             modkit dmr pair \
                 -a $HP1 \
                 --index-a $HP1_i \
                 -b $HP2 \
                 --index-b $HP2_i \
-                -o ${OUTPUT_DIR}/${subdirectory_name}_AR_score.bed \
+                -o ${OUTPUT_DIR}/${subdirectory_name}_CpG_score.bed \
                 -r $BED \
                 --ref $REF \
                 --base C \
@@ -50,14 +54,12 @@ done
 
 cd $OUTPUT_DIR
 
-for file in $OUTPUT_DIR/*.bed; do
+for file in $OUTPUT_DIR/*_CpG_score.bed; do
     sample=$(echo "${file##*/}" | cut -d'.' -f1) #Sample labeling compliant with 1000g samples
     awk -v OFS="\t" -v sample="$sample" '{print $0 "\t" sample}' "$file" > "${file%.bed}_name.bed"
     rm $file
 done
 
-cat *_name.bed > 1000g_AR.bed
+cat *_name.bed > CpG_1000g.bed
 
 echo "Script complete"
-
-
