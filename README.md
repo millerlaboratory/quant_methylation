@@ -1,4 +1,7 @@
 # Quantifying methylation data from ONT Long Reads
+
+This is outdated.
+
 This repository is a collection of scripts that are being developed into a pipeline for processing methylation data from aligned ONT long reads. The current output is used for visualzing methylation data from samples sequenced as part of the 1000 Genomes ONT Sequencing consortium (https://millerlaboratory.com/1000G-ONT.html) for the ONT Data Explorer R shiny app: https://millerlaboratory.shinyapps.io/Data_Explorer_V1/. The goal is to use the eventual pipeline for determining X-inactivation status for individuals with two X chromosomes. These scripts are written and maintianed by Sophia Gibson in the Miller Laboratory at The University of Washington.
 
 The overall data processing pipeline looks like this:
